@@ -21,11 +21,11 @@ jobs:
 
       - name: Fix pubspec.yaml
         run: |
-          if! grep -q "environment:" pubspec.yaml; then
-            sed -i '1s/^/environment:\n sdk: ">=3.0.0 <4.0.0"\n\n/' pubspec.yaml
+          if ! grep -q "environment:" pubspec.yaml; then
+            sed -i '1s/^/environment:\n  sdk: ">=3.0.0 <4.0.0"\n\n/' pubspec.yaml
           fi
 
-      - run: flutter create. --platforms=android --overwrite
+      - run: flutter create . --platforms=android --overwrite
 
       - run: flutter pub get
 
