@@ -7,16 +7,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.0'
           channel: 'stable'
-          
+
+      - run: flutter doctor -v
+
+      - run: flutter create . --platforms=android
+
       - run: flutter pub get
-      
-      - run: flutter build apk --debug
-      
+
+      - run: flutter build apk --debug --no-shrink
+
       - uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
