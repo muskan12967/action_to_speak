@@ -1,6 +1,6 @@
 name: Build Flutter APK
 on:
-  workflow_dispatch:
+  workflow_dispatch:[Best]
 
 jobs:
   build:
@@ -19,9 +19,13 @@ jobs:
           flutter-version: '3.22.0'
           channel: 'stable'
 
-      - run: flutter doctor -v
+      - name: Fix pubspec.yaml
+        run: |
+          if! grep -q "environment:" pubspec.yaml; then
+            sed -i '1s/^/environment:\n sdk: ">=3.0.0 <4.0.0"\n\n/' pubspec.yaml
+          fi
 
-      - run: flutter create . --platforms=android
+      - run: flutter create. --platforms=android --overwrite
 
       - run: flutter pub get
 
